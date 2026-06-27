@@ -1,0 +1,21 @@
+.product-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-icon {
+    margin: auto 0px;
+}
+
+.search-section {
+    display: flex;
+}
+
+.search_input {
+    width: 500px;
+    height: 25px;
+}
+
+.search-icon {
+    height: 20px;
+}
