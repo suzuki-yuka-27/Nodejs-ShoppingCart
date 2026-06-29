@@ -8,7 +8,7 @@ const products = [
 
 let cartItems = [];
 
-function renderProducts(productList) {
+function renderProducts(products) {
     $("#product-list").empty();
 
     products.forEach(product => {
@@ -22,4 +22,15 @@ function renderProducts(productList) {
     });
 }
 
+function searchProducts(products) {
+    $("#search-input").on("input", function () {
+        const keyword = toHiragana($(this).val());
+        const filteredProducts = products.filter(function (product) {
+            return product.name.includes(keyword);
+        });
+        renderProducts(filteredProducts);
+    });
+}
+
+searchProducts(products);
 renderProducts(products);
