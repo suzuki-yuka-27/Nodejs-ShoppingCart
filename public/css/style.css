@@ -9,10 +9,17 @@
 
 .search-section {
     display: flex;
+    flex-flow: column;
 }
 
-.search_input {
-    width: 500px;
+.search-box {
+    display: flex;
+}
+
+#search {
+    flex: 1;
+    min-width: 0;
+    max-width: 500px;
     height: 25px;
 }
 
