@@ -1,0 +1,28 @@
+.product-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-icon {
+    margin: auto 0px;
+}
+
+.search-section {
+    display: flex;
+    flex-flow: column;
+}
+
+.search-box {
+    display: flex;
+}
+
+#search {
+    flex: 1;
+    min-width: 0;
+    max-width: 500px;
+    height: 25px;
+}
+
+.search-icon {
+    height: 20px;
+}
