@@ -10,24 +10,28 @@
 </head>
 
 <body>
-    <div class="product-header">
+    <div id="product-header">
         <h1>商品一覧</h1>
-        <img src="images/cart_icon.png" alt="ショッピングカートアイコン" class="cart-icon">
+        <img src="images/cart_icon.png" alt="ショッピングカートアイコン" id="cart-icon">
     </div>
-    <div class="search-section">
+    <div id="search-section">
         <label for="search">
             商品を検索
         </label>
-        <div class="search-box">
+        <div id="search-box">
             <input id="search" type="text" placeholder="商品を入力">
             <button id="search-button">
-                <img src="images/search_icon.png" alt="検索アイコン" class="search-icon">
+                <img src="images/search_icon.png" alt="検索アイコン" id="search-icon">
             </button>
         </div>
     </div>
-    <div class="product-list">
+    <div id="product-list">
     </div>
     <button>注文する</button>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
