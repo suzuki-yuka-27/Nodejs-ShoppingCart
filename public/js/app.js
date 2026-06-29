@@ -8,10 +8,10 @@ const products = [
 
 let cartItems = [];
 
-function renderProducts(products) {
+function renderProducts(productList) {
     $("#product-list").empty();
 
-    products.forEach(product => {
+    productList.forEach(product => {
         $("#product-list").append(`
             <div class="product-card">
                 <p>${product.name}</p>
@@ -22,14 +22,42 @@ function renderProducts(products) {
     });
 }
 
-function searchProducts(products) {
+function searchProducts(productList) {
     $("#search-input").on("input", function () {
-        const keyword = toHiragana($(this).val());
-        const filteredProducts = products.filter(function (product) {
+        const keyword = $(this).val();
+        const filteredProducts = productList.filter(function (product) {
             return product.name.includes(keyword);
         });
         renderProducts(filteredProducts);
     });
+}
+
+$(document).on("click", ".add-cart-button", function () {
+    const productId = Number($(this).data("id"));
+    addCart(productId);
+});
+
+function renderCart(cartList) {
+    $("#cart-list").empty();
+
+    cartList.forEach(cart => {
+        $("#cart-list").append(`
+            <div class="cart-card">
+                <p>${cart.name}</p>
+                <p>${cart.price}円</p>
+            </div>
+        `);
+    });
+}
+
+function addCart(productId) {
+    const product = products.find(function (product) {
+        return product.id === productId;
+    });
+
+    cartItems.push(product);
+
+    renderCart(cartItems);
 }
 
 searchProducts(products);
