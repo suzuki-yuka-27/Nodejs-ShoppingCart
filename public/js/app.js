@@ -11,15 +11,15 @@ let cartItems = [];
 function renderProducts(productList) {
     $("#product-list").empty();
 
-    productList.forEach(product => {
-        $("#product-list").append(`
-            <div class="product-card">
-                <p>${product.name}</p>
-                <p>${product.price}円</p>
-                <button class="add-cart-button" data-id="${product.id}">カートに追加</button>
-            </div>
-        `);
-    });
+    const html = productList.map(product => {
+        return `<div class="product-card">
+            <p>${product.name}</p>
+            <p>${product.price}円</p>
+            <button class="add-cart-button" data-id="${product.id}">カートに追加</button>
+        </div>`;
+    }).join("");
+
+    $("#product-list").html(html);
 }
 
 function searchProducts(productList) {
@@ -40,18 +40,18 @@ $(document).on("click", ".add-cart-button", function () {
 function renderCart(cartList) {
     $("#cart-list").empty();
 
-    cartList.forEach(cart => {
-        $("#cart-list").append(`
-            <div class="cart-card">
+    const html = cartList.map(cart => {
+        return `<div class="cart-card">
                 <p>${cart.name}</p>
                 <p>${cart.price}円</p>
                 <p>${cart.quantity}個</p>
                 <input class="product-quantity-input" type="number" data-id="${cart.id}" value="${cart.quantity}" min="1">
                 <button class="product-quantity-button" data-id="${cart.id}">更新</button>
                 <button class="delete-product-button" data-id="${cart.id}">削除</button>
-            </div>
-        `);
-    });
+            </div>`;
+    }).join("");
+
+    $("#cart-list").html(html);
 }
 
 function addCart(productId) {
@@ -59,8 +59,19 @@ function addCart(productId) {
         return product.id === productId;
     });
 
-    product.quantity = 1;
-    cartItems.push(product);
+    if (!product) {
+        return;
+    }
+
+    const cartItem = cartItems.find(function (cartItem) {
+        return cartItem.id === productId;
+    })
+
+    if (cartItem) {
+        cartItem.quantity += 1;
+    } else {
+        cartItems.push({ ...product, quantity: 1 });
+    }
 
     renderCart(cartItems);
 }
