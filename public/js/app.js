@@ -46,8 +46,9 @@ function renderCart(cartList) {
                 <p>${cart.name}</p>
                 <p>${cart.price}円</p>
                 <p>${cart.quantity}個</p>
-                <input class="product-quantity-input" type="number" data-id="${cart.id}">
+                <input class="product-quantity-input" type="number" data-id="${cart.id}" value="${cart.quantity}" min="1">
                 <button class="product-quantity-button" data-id="${cart.id}">更新</button>
+                <button class="delete-product-button" data-id="${cart.id}">削除</button>
             </div>
         `);
     });
@@ -66,18 +67,36 @@ function addCart(productId) {
 
 $(document).on("click", ".product-quantity-button", function () {
     const cartId = Number($(this).data("id"));
-    updateQuantity(cartId);
+    const quantity = Number($(`.product-quantity-input[data-id="${cartId}"]`).val());
+    updateQuantity(cartId, quantity);
 });
 
-function updateQuantity(cartId) {
+function updateQuantity(cartId, quantity) {
     const cartItem = cartItems.find(function (item) {
         return item.id === cartId;
-    })
+    });
 
-    cartItem.quantity = $(".product-quantity-input").val();
+    if (!cartItem || Number.isNaN(quantity) || quantity < 1) {
+        return;
+    }
+
+    cartItem.quantity = quantity;
 
     renderCart(cartItems);
 }
+
+function deleteProduct(cartId) {
+    cartItems = cartItems.filter(function (item) {
+        return item.id !== cartId;
+    });
+
+    renderCart(cartItems);
+}
+
+$(document).on("click", ".delete-product-button", function () {
+    const cartId = Number($(this).data("id"));
+    deleteProduct(cartId);
+});
 
 searchProducts(products);
 renderProducts(products);
