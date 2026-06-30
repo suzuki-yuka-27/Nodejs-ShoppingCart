@@ -1,28 +1,37 @@
-.product-header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.cart-icon {
-    margin: auto 0px;
-}
-
-.search-section {
+#search-section {
     display: flex;
     flex-flow: column;
 }
 
-.search-box {
+#search-box {
     display: flex;
 }
 
-#search {
+#search-input {
     flex: 1;
     min-width: 0;
     max-width: 500px;
     height: 25px;
 }
 
-.search-icon {
+#search-icon {
     height: 20px;
+}
+
+#product-list,
+#cart-list {
+    margin: 15px 0px;
+    max-width: 500px;
+}
+
+.product-card,
+.cart-card {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    margin: 16px 0px;
+}
+
+.product-card p {
+    width: 30%;
 }
