@@ -52,6 +52,8 @@ function renderCart(cartList) {
     }).join("");
 
     $("#cart-list").html(html);
+
+    calculation(cartItems);
 }
 
 function addCart(productId) {
@@ -108,6 +110,14 @@ $(document).on("click", ".delete-product-button", function () {
     const cartId = Number($(this).data("id"));
     deleteProduct(cartId);
 });
+
+function calculation(cartItems) {
+    const totalAmount = cartItems.reduce(function (total, item) {
+        return total + (item.price * item.quantity);
+    }, 0);
+
+    $("#total-amount").text("合計" + totalAmount + "円");
+}
 
 searchProducts(products);
 renderProducts(products);
