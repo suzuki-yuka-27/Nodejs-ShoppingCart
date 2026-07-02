@@ -54,6 +54,7 @@ function renderCart(cartList) {
     $("#cart-list").html(html);
 
     calculation(cartItems);
+    renderOrder(cartItems);
 }
 
 function addCart(productId) {
@@ -116,7 +117,21 @@ function calculation(cartItems) {
         return total + (item.price * item.quantity);
     }, 0);
 
-    $("#total-amount").text("合計" + totalAmount + "円");
+    $(".total-amount").text("合計" + totalAmount + "円");
+}
+
+function renderOrder(cartList) {
+    $("#order-list").empty();
+
+    const html = cartList.map(cart => {
+        const amount = cart.price * cart.quantity;
+        return `<div class="order-card">
+                <p>${cart.name}</p>
+                <p>${amount}円</p>
+            </div>`;
+    }).join("");
+
+    $("#order-list").html(html);
 }
 
 searchProducts(products);
