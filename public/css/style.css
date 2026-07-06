@@ -19,13 +19,15 @@
 }
 
 #product-list,
-#cart-list {
+#cart-list,
+#order-list {
     margin: 15px 0px;
     max-width: 500px;
 }
 
 .product-card,
-.cart-card {
+.cart-card,
+.order-card {
     display: flex;
     justify-content: space-between;
     text-align: left;

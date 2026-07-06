@@ -52,6 +52,9 @@ function renderCart(cartList) {
     }).join("");
 
     $("#cart-list").html(html);
+
+    calculation(cartList);
+    renderOrder(cartList);
 }
 
 function addCart(productId) {
@@ -108,6 +111,62 @@ $(document).on("click", ".delete-product-button", function () {
     const cartId = Number($(this).data("id"));
     deleteProduct(cartId);
 });
+
+function calculation(cartItems) {
+    const totalAmount = cartItems.reduce(function (total, item) {
+        return total + (item.price * item.quantity);
+    }, 0);
+
+    $(".total-amount").text("合計" + totalAmount + "円");
+}
+
+function renderOrder(cartList) {
+    const $orderList = $("#order-list");
+    $orderList.find(".order-card").remove();
+
+    const html = cartList.map(cart => {
+        const amount = cart.price * cart.quantity;
+        return `<div class="order-card">
+                <p>${cart.name}</p>
+                <p>${amount}円</p>
+            </div>`;
+    }).join("");
+
+    $("#order-list").html(html);
+}
+
+$(document).on("click", "#order-button", function () {
+    sendOrder(cartItems);
+});
+
+function sendOrder(cartItems) {
+    const orderList = cartItems.map(function (item) {
+        return {
+            id: item.id,
+            name: item.name,
+            amount: item.price * item.quantity,
+        };
+    });
+
+    const totalAmount = orderList.reduce(function (total, item) {
+        return total + item.amount
+    })
+
+    $.ajax({
+        // TODO:保存先のJSONを作成したらurl書き換える
+        url: "/orders",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ orderList, totalAmount }),
+        success: function () {
+            cartItems = [];
+
+            renderCart(cartItems);
+        }, error: function () {
+            alert("注文の送信に失敗しました");
+        }
+    })
+}
 
 searchProducts(products);
 renderProducts(products);
