@@ -53,8 +53,8 @@ function renderCart(cartList) {
 
     $("#cart-list").html(html);
 
-    calculation(cartItems);
-    renderOrder(cartItems);
+    calculation(cartList);
+    renderOrder(cartList);
 }
 
 function addCart(productId) {
@@ -121,7 +121,8 @@ function calculation(cartItems) {
 }
 
 function renderOrder(cartList) {
-    $("#order-list").empty();
+    const $orderList = $("#order-list");
+    $orderList.find(".order-card").remove();
 
     const html = cartList.map(cart => {
         const amount = cart.price * cart.quantity;
@@ -147,7 +148,7 @@ function sendOrder(cartItems) {
         };
     });
 
-    const totalAmount = orderList.reduce(function (item, total) {
+    const totalAmount = orderList.reduce(function (total, item) {
         return total + item.amount
     })
 
@@ -158,11 +159,9 @@ function sendOrder(cartItems) {
         contentType: "application/json",
         data: JSON.stringify({ orderList, totalAmount }),
         success: function () {
-            cartList = [];
+            cartItems = [];
 
-            renderCart(cartList);
-            renderOrder(cartList);
-            $(".total-amount").text("合計：0円");
+            renderCart(cartItems);
         }, error: function () {
             alert("注文の送信に失敗しました");
         }
